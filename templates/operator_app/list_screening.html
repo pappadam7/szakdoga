@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %} Vetítések listája {% endblock title %}
+{% block content %}
+    <div class="sticky-top">{% include "navbars/operator_navbar.html" %}</div>
+    <div class="container mt-5">
+        <h1 class="text-center">Vetítések listája</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Film</th>
+                    <th>Kezdés dátum</th>
+                    <th>Kezdés idő</th>
+                    <th>Terem</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for screening in screenings %}
+                <tr>
+                    <td>{{ screening.MovieID.Title }}</td>
+                    <td>{{ screening.Start_Date }}</td>
+                    <td>{{ screening.Start_Time }}</td>
+                    <td>{{ screening.Room }}</td>
+                    <td>
+                    <a href="{% url 'operator:edit_screening' screening.ID %}" class="btn btn-primary btn-sm">Szerkesztés</a>
+                    <a href="{% url 'operator:delete_screening' screening.ID %}" class="btn btn-danger btn-sm">Törlés</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'operator:add_screening' %}" class="btn btn-primary mt-3">Új vetítés hozzáadása</a>
+    </div>
+{% endblock content %}

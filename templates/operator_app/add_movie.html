@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %} Film hozzáadása {% endblock title %}
+{% block content %}
+    {% include "navbars/operator_navbar.html" %}
+    <div class="operator_add_movie">
+        <h1 class="text-center">Film hozzáadása</h1>
+        <form method="post" enctype="multipart/form-data" class="operator_add_movie_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-3">Mentés</button>
+        </form>
+    </div>
+{% endblock content %}

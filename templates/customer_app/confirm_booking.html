@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Foglalás megerősítése {% endblock title %}
+{% block content %}
+<div class="sticky-top" style="padding:0 2%;">{% include "navbars/customer_navbar.html" %}</div>
+<div class="container mt-5">
+    <h1>Foglalás megerősítése</h1>
+    <ul>
+        {% for seat in selected_seats %}
+        <li>Sor: {{ seat.row }}, Szék: {{ seat.seat }}</li>
+        {% endfor %}
+    </ul>
+    <div>
+{#        <a href="{% url 'customer:room_booking' %}" class="btn btn-secondary">Vissza</a>#}
+        <a href="{% url 'customer:finalize_booking' %}" class="btn btn-primary">Megerősítés</a>
+    </div>
+</div>
+{% endblock content %}

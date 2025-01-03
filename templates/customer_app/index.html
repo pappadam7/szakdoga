@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} Mozi {% endblock title %}
+{% block content %}
+    <div class="sticky-top" style="padding:0 2%;">{% include "navbars/customer_navbar.html" %}</div>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Filmek listája</h1>
+        <div class="row">
+            {% for movie in movies %}
+                    <div class="col-md-4">
+                    <a href="{% url 'customer:movie_detail' movie.ID %}" class="text-decoration-none">
+                    <div class="card mb-4">
+                        {% if movie.Poster %}
+                            <img src="{{ movie.Poster.url }}" class="card-img-top" alt="{{ movie.Title }}">
+                        {% else %}
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Nincs kép">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.Title }}</h5>
+                            <p class="card-text">
+                                Rendező: {{ movie.Director }}<br>
+                                Kiadás dátuma: {{ movie.ReleaseDate }}<br>
+                                Hossz: {{ movie.Length }} perc
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                    </div>
+                
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

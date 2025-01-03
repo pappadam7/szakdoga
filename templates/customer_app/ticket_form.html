@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Jegy vásárlása {% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Jegyfoglalás</h1>
+    <p>Az alábbi székek kerülnek lefoglalásra:</p>
+    <ul>
+        {% for seat in selected_seats %}
+        <li>Sor: {{ seat.row }}, Szék: {{ seat.seat }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Foglalás megerősítése</button>
+    </form>
+</div>
+
+{% endblock content %}

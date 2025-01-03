@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Vetítés szerkesztése {% endblock title %}
+{% block content %}
+    {% include "navbars/operator_navbar.html" %}
+    <div class="container mt-5">
+        <h1 class="text-center">Vetítés szerkesztése</h1>
+        <p class="text-center">Film: <strong>{{ screening.MovieID.Title }}</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Mentés</button>
+            <a href="{% url 'operator:screenings' %}" class="btn btn-secondary">Mégse</a>
+        </form>
+    </div>
+{% endblock content %}

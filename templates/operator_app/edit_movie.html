@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} {{ movie.Title }} szerkesztése {% endblock title %}
+{% block content %}
+    {% include "navbars/operator_navbar.html" %}
+    <div class="container mt-5">
+        <h1 class="text-center">Szerkesztés: {{ movie.Title }}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Mentés</button>
+            <a href="{% url 'operator:movie_detail' movie.ID %}" class="btn btn-secondary">Mégse</a>
+        </form>
+    </div>
+{% endblock content %}

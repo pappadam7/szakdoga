@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %} Mozi {% endblock title %}
+{% block content %}
+<div class="sticky-top" style="padding:0 2%;">{% include "navbars/customer_navbar.html" %}</div>
+<div class="room1">
+    <button class="room1_vaszon" disabled>VÁSZON</button>
+    <table>
+    <tbody>
+    {% for x in "012345678922" %}
+        <tr>
+            <td>
+                2
+            </td>
+            <td>
+                <button type="button" class="btn btn-success " onclick="toggleClass(this)">1</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success " onclick="toggleClass(this)">2</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">3</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">4</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">5</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success " onclick="toggleClass(this)">6</button>
+            </td>
+            <td class="room1_folyoso">
+                
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">7</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">8</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">9</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">10</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" onclick="toggleClass(this)">11</button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+<script>
+  function toggleClass(button) {
+      if (button.classList.contains('btn-success')) { 
+          button.classList.remove('btn-success');
+          button.classList.add('btn-warning');
+      } else if (button.classList.contains('btn-warning')) {
+          button.classList.remove('btn-warning');
+          button.classList.add('btn-success');
+      }
+  }
+</script>
+</div>
+{% endblock content %}

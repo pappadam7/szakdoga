@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} {{ movie.Title }} {% endblock title %}
+{% block content %}
+    {% include "navbars/customer_navbar.html" %}
+    <div class="container mt-5">
+        <h1 class="text-center">{{ movie.Title }}</h1>
+        <div class="row">
+            <div class="col-md-4">
+                {% if movie.Poster %}
+                <img src="{{ movie.Poster.url }}" class="img-fluid" alt="{{ movie.Title }}">
+                {% else %}
+                <p>Nincs kép elérhető</p>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <p><strong>Rendező:</strong> {{ movie.Director }}</p>
+                <p><strong>Kiadás dátuma:</strong> {{ movie.ReleaseDate }}</p>
+                <p><strong>Hossz:</strong> {{ movie.Length }} perc</p>
+                <p><strong>Leírás:</strong> {{ movie.Description }}</p>
+                <p><strong>Vetítések:</strong></p>
+                <h3 class="mt-4">Vetítések</h3>
+                {% if screenings %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Dátum</th>
+                            <th>Idő</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for screening in screenings %}
+                        <tr>
+                            <td>{{ screening.Start_Date|date:"Y-m-d" }}</td>
+                            <td>{{ screening.Start_Time|time:"H:i" }}</td>
+                            <td><a href="{% url 'customer:reservation' screening.ID %}" class="btn btn-primary">Foglalás</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>Nincsenek elérhető vetítések.</p>
+                {% endif %}
+            </div>
+        </div>
+        <a href="/" class="btn btn-primary">Vissza</a>
+    </div>
+{% endblock content %}

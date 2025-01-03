@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Vetítés törlése {% endblock title %}
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center text-danger">Biztosan törölni szeretnéd ezt a vetítést?</h1>
+        <p class="text-center">
+            Film: <strong>{{ screening.MovieID.Title }}</strong><br>
+            Kezdés: <strong>{{ screening.Start }}</strong><br>
+            Terem: <strong>{{ screening.Room }}</strong>
+        </p>
+        <form method="post" class="text-center">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Törlés</button>
+            <a href="{% url 'operator:screenings' %}" class="btn btn-secondary">Mégse</a>
+        </form>
+    </div>
+{% endblock content %}

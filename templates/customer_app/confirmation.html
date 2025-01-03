@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %} Visszaigazolás {% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Sikeres vásárlás!</h1>
+    <p>Köszönjük a foglalását. A jegyeket sikeresen rögzítettük.</p>
+    <a href="{% url 'customer:index' %}" class="btn btn-primary">Vissza a főoldalra</a>
+</div>
+{% endblock content %}
