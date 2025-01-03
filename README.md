@@ -4,11 +4,6 @@
 
 ## Telepítés lépései
 
-### Git repozitori klónozása
-```
-git clone https://git-okt.sed.inf.szte.hu/h984794/moziapp.git
-cd moziapp
-```
 
 ### Virtuális környzet létrehozása
 ```
