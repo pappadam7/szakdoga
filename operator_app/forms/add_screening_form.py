@@ -14,10 +14,16 @@ class ScreeningForm(forms.ModelForm):
     class Meta:
         model = Screening
         fields = ['MovieID', 'Start_Date', 'Start_Time', 'Room']
+        labels = {
+            'Start_Date': 'Vetítés napja',
+            'Start_Time': 'Vetítés időpontja',
+            'Room': 'Terem',
+        }
+
         widgets = {
             'Start_Date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'Start_Time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
-            'Room': forms.NumberInput(attrs={'class': 'form-control'}),
+            'Room': forms.NumberInput(attrs={'class': 'form-control', 'min': '1', 'max': '2', 'step': '1'}),
         }
 
     def __init__(self, *args, **kwargs):

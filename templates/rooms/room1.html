@@ -22,11 +22,19 @@
                     {% else %}
                         <!-- Szabad szék -->
                         <button 
-                            type="button" 
-                            class="btn btn-success" 
-                            hx-post="{% url 'customer:toggle_button' %}" 
+                            id="seat-{{ row.row }}-{{ seat.number }}"
+                            data-row="{{ row.row }}"
+                            data-seat="{{ seat.number }}"
+                            type="button"
+                            class="btn btn-success"
+                            hx-post="{% url 'customer:toggle_button' %}"
                             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-                            hx-vals='{"screening_id": "{{ screening.ID }}", "row_number": "{{ row.row }}", "seat_number": "{{ seat.number }}", "current_class": "btn btn-success"}'
+                            hx-vals='{
+                                "screening_id": "{{ screening.ID }}",
+                                "row_number": "{{ row.row }}",
+                                "seat_number": "{{ seat.number }}",
+                                "current_class": "btn btn-success"
+                            }'
                             hx-swap="outerHTML">
                             {{ seat.number }}
                         </button>
@@ -42,32 +50,31 @@
     <a href="{% url 'customer:ticket_form' screening_id=screening.ID %}" class="btn btn-primary mt-3">Tovább</a>
 </div>
 
+<script>
+    const screeningId = "{{ screening.ID }}";
+    const socket = new WebSocket('ws://' + window.location.host + `/ws/seat_updates/${screeningId}/`);
 
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const seatButton = document.querySelector(`[data-row="${data.row}"][data-seat="${data.seat}"]`);
+        if (seatButton) {
+            if (data.action === "select") {
+                seatButton.classList.remove("btn-success", "btn-warning");
+                seatButton.classList.add("btn-danger");
+                seatButton.disabled = true;
+            } else if (data.action === "deselect") {
+                seatButton.classList.remove("btn-danger");
+                seatButton.classList.add("btn-success");
+                seatButton.disabled = false;
+            }
+        }
+    };
 
-{#<script>#}
-{#let selectedSeats = [];#}
-{##}
-{#function toggleSeat(button) {#}
-{#    const row = button.getAttribute("data-row");#}
-{#    const seat = button.getAttribute("data-seat");#}
-{#    const index = selectedSeats.findIndex(s => s.row === row && s.seat === seat);#}
-{#    if (index === -1) {#}
-{#        selectedSeats.push({ row, seat });#}
-{#        button.classList.remove("btn-success");#}
-{#        button.classList.add("btn-warning");#}
-{#    } else {#}
-{#        selectedSeats.splice(index, 1);#}
-{#        button.classList.remove("btn-warning");#}
-{#        button.classList.add("btn-success");#}
-{#    }#}
-{##}
-{#    console.log("Kiválasztott székek:", selectedSeats);#}
-{#}#}
-{##}
-{#document.getElementById("booking-form").addEventListener("submit", function(event) {#}
-{#    const hiddenInput = document.getElementById("selected-seats");#}
-{#    hiddenInput.value = JSON.stringify(selectedSeats); // A székeket JSON formátumba konvertáljuk#}
-{#    console.log("Küldött adatok:", hiddenInput.value);#}
-{#});#}
-{#</script>#}
+    function notifySeatSelected(row, seat) {
+        socket.send(JSON.stringify({
+            'row': row,
+            'seat': seat
+        }));
+    }
+</script>
 {% endblock content %}

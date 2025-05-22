@@ -4,6 +4,11 @@
 
 ## Telepítés lépései
 
+### Git repozitori klónozása
+```
+git clone https://git-okt.sed.inf.szte.hu/h984794/moziapp.git
+cd moziapp
+```
 
 ### Virtuális környzet létrehozása
 ```
@@ -29,3 +34,15 @@ pip install -r requirements.txt
 ```
 python manage.py runserver
 ```
+
+## Felhasználók
+Admin: F.név:Admin
+PW:1234
+
+Operátor:
+F.név: Operator
+PW:Op123456
+
+Seller:
+F.Név:Seller
+PW:Se123456

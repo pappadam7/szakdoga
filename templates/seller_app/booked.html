@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %} {{ movie.Title }} {% endblock title %}
+{% block content %}
+    {% include "navbars/customer_navbar.html" %}
+    <div class="container mt-5">
+        <h1 class="text-center">{{ movie.Title }} - {{ screening.Start_Time }}</h1>
+        <div class="row">
+            <div class="col-md-4">
+                {% if movie.Poster %}
+                <img src="{{ movie.Poster.url }}" class="img-fluid" alt="{{ movie.Title }}">
+                {% else %}
+                <p>Nincs kép elérhető</p>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Vezetéknév</th>
+                            <th>Keresztnév</th>
+                            <th>Sor</th>
+                            <th>Szék</th>
+                            <th>Email cím</th>
+                            <th>Telefon szám</th>
+                            <th></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                            {% if not ticket.Sold %}
+                                <tr>
+                                    <td>{{ ticket.CustomerLastName }}</td>
+                                    <td>{{ ticket.CustomerFirsName }}</td>
+                                    <td>{{ ticket.Row }}</td>
+                                    <td>{{ ticket.Seat }}</td>
+                                    <td>{{ ticket.CustomerEmail }}</td>
+                                    <td>{{ ticket.CustomerPhone }}</td>
+                                    <td>
+                                        <button 
+                                            class="btn btn-primary"
+                                            hx-get="{% url 'seller:sell_conformation' ticket.ID %}" 
+                                            hx-target="#modal-body" 
+                                            hx-trigger="click"
+                                            hx-swap="innerHTML">
+                                          Eladás
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>             
+            </div>
+        </div>
+        <a href="/seller/" class="btn btn-primary">Vissza</a>
+    </div>
+{% endblock content %}

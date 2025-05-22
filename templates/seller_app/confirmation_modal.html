@@ -1,0 +1,17 @@
+<form method="post" 
+      hx-post="{% url 'seller:sell_conformation' ticket.ID %}" 
+      hx-target="#modal-body" 
+      hx-swap="innerHTML">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Eladás megerősítése</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  </div>
+  <div class="modal-body">
+    <p>Biztosan el akarod adni ezt a jegyet: <strong>{{ ticket }}</strong>?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success">Igen, eladom</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Mégse</button>
+  </div>
+</form>

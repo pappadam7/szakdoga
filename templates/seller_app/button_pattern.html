@@ -1,0 +1,14 @@
+<button 
+    type="button" 
+    class="{{ class }}" 
+    hx-post="{% url 'seller:toggle_button' %}" 
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    hx-vals='{
+        "screening_id": "{{ screening_id }}", 
+        "row_number": "{{ row }}", 
+        "seat_number": "{{ seat }}", 
+        "current_class": "{{ class }}"
+    }'
+    hx-swap="outerHTML">
+    {{ seat }}
+</button>

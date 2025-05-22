@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +42,10 @@ INSTALLED_APPS = [
     'customer_app',
     'operator_app',
     'seller_app',
+    'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,7 +76,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Mozi_Project.wsgi.application'
+# WSGI_APPLICATION = 'Mozi_Project.wsgi.application'
+ASGI_APPLICATION = 'Mozi_Project.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
 
 
 # Database

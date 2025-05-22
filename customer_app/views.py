@@ -10,6 +10,9 @@ from .forms import TicketForm
 from .utils import generate_email_content
 from django.middleware.csrf import get_token
 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 def index(request):
     movies = Movie.objects.all()
@@ -87,7 +90,10 @@ def toggle_button(request):
             selected_seats.append(seat_obj)
             new_class = "btn btn-warning"
         else:
-            selected_seats = [s for s in selected_seats if not (s["row"] == row and s["seat"] == seat)]
+            selected_seats = [
+                s for s in selected_seats
+                if not (str(s["row"]) == str(row) and str(s["seat"]) == str(seat))
+            ]
             new_class = "btn btn-success"
 
         # Gomb HTML generálása
@@ -102,6 +108,19 @@ def toggle_button(request):
         # Süti frissítése és HTML visszaadása
         response = HttpResponse(button_html, content_type="text/html")
         response.set_cookie("selected_seats", json.dumps(selected_seats), httponly=True)
+
+        #  WebSocket üzenet küldése a csoportnak
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f"screening_{screening_id}",
+            {
+                "type": "seat_update",  # ezt a metódust fogja hívni a consumer
+                "row": row,
+                "seat": seat,
+                "action": "select" if new_class == "btn btn-warning" else "deselect",
+            }
+        )
+
         return response
 
     return JsonResponse({"error": "Invalid request"}, status=400)

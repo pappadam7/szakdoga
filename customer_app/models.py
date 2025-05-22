@@ -10,6 +10,9 @@ class Movie(models.Model):
     Description = models.TextField()
     Poster = models.ImageField(upload_to='movies/')
 
+    def __str__(self):
+        return self.Title
+
 
 class Screening(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -28,3 +31,4 @@ class Ticket(models.Model):
     CustomerLastName = models.CharField(max_length=50)
     CustomerEmail = models.CharField(max_length=50)
     CustomerPhone = models.CharField(max_length=50)
+    Sold = models.BooleanField(default=False)

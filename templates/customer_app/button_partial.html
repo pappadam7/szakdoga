@@ -1,14 +1,18 @@
-<button 
-    type="button" 
-    class="{{ class }}" 
-    hx-post="{% url 'customer:toggle_button' %}" 
+<button
+    type="button"
+    class="{{ class }}"
+    hx-post="{% url 'customer:toggle_button' %}"
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     hx-vals='{
-        "screening_id": "{{ screening_id }}", 
-        "row_number": "{{ row }}", 
-        "seat_number": "{{ seat }}", 
+        "screening_id": "{{ screening_id }}",
+        "row_number": "{{ row }}",
+        "seat_number": "{{ seat }}",
         "current_class": "{{ class }}"
     }'
-    hx-swap="outerHTML">
+    hx-swap="outerHTML"
+    data-row="{{ row }}"
+    data-seat="{{ seat }}"
+    data-screening="{{ screening_id }}"
+    onclick="notifySeatSelection(this)">
     {{ seat }}
 </button>

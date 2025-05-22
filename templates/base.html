@@ -12,6 +12,32 @@
 <body>
     {% block content %}
     {% endblock content %}
+    <!-- Modal konténer -->
+<div class="modal fade" id="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" id="modal-body">
+      <!-- HTMX ide tölti be a tartalmat -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.body.addEventListener('htmx:afterSwap', (e) => {
+    if (e.detail.target.id === "modal-body") {
+      const modal = new bootstrap.Modal(document.getElementById('modal'));
+      modal.show();
+    }
+  });
+
+  document.body.addEventListener('htmx:afterRequest', (e) => {
+    if (e.detail.xhr.status === 204) {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('modal'));
+      modal.hide();
+      location.reload();
+    }
+  });
+</script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
