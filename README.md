@@ -1,8 +1,13 @@
 # MoziApp
 
+## Docker
+
+A repository tartalmaz egy docker mappát és docker compose segítségével futatható a rendszer. Ez tartalmazza az adatbázist is.  
 
 
 ## Telepítés lépései
+
+A rendszer telepítése saját futtatásra.
 
 ### Git repozitori klónozása
 ```
@@ -29,11 +34,15 @@ source my_env/bin/activate
 ```
 pip install -r requirements.txt
 ```
+### Megjegyzés
+Vagy egy saját PostgeSql adatbázist kell bekonfugurálni vagy érdemesebb a kikommentezett sqlite adatbázist használni.
 
 ## Szerver indítása
 ```
 python manage.py runserver
 ```
+
+
 
 ## Felhasználók
 Admin: F.név:Admin
